@@ -37,7 +37,7 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/misskey-arm64:latest
-            ghcr.io/${{ github.repository_owner }}/misskey-arm64:${{ github.event.inputs.target }}
+            ghcr.io/${{ github.repository_owner }}/misskey-arm64:${{ steps.releases.outputs.REF }}
           cache-from: type=registry,ref=user/app:latest
           cache-to: type=inline
 
