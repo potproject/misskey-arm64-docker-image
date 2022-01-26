@@ -1,7 +1,7 @@
 name: Build and Deploy to github packages
 on:
   schedule:
-  - cron: 0 0 * * * #JSTで9時
+  - cron: 0 0 * * *
   push:
 
 jobs:
@@ -11,8 +11,8 @@ jobs:
       - name: Get latest Releases
         id: releases
         run: |
-          ref=`curl -s https://api.github.com/repos/misskey-dev/misskey/releases/latest | jq -r '.tag_name'` &&
-          echo '::set-output name=REF::$ref'
+          ref=`curl -s https://api.github.com/repos/misskey-dev/misskey/releases/latest | jq -r '.tag_name'`
+          echo "::set-output name=REF::$ref"
       - name: Checkout
         uses: actions/checkout@v2
         with:
