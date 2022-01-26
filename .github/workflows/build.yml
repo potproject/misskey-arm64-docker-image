@@ -12,6 +12,7 @@ jobs:
         id: releases
         run: |
           ref=`curl -s https://api.github.com/repos/misskey-dev/misskey/releases/latest | jq -r '.tag_name'`
+          ! docker manifest inspect ghcr.io/potproject/misskey-arm64:$ref > /dev/null
           echo "::set-output name=REF::$ref"
       - name: Checkout
         uses: actions/checkout@v2
