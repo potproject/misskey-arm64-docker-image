@@ -1,21 +1,24 @@
 name: Build and Deploy to github packages
 on:
-  workflow_dispatch:
-    inputs:
-      target:
-        description: 'Target Branch, tag or SHA'
-        required: true
-        default: 'main'
+  schedule:
+  - cron: 0 0 * * *
+  push:
 
 jobs:
   buildx:
     runs-on: ubuntu-latest
     steps:
+      - name: Get latest Releases
+        id: releases
+        run: |
+          ref=`curl -s https://api.github.com/repos/misskey-dev/misskey/releases/latest | jq -r '.tag_name'`
+          ! docker manifest inspect ghcr.io/potproject/misskey-arm64:$ref > /dev/null
+          echo "::set-output name=REF::$ref"
       - name: Checkout
         uses: actions/checkout@v2
         with:
             repository: misskey-dev/misskey
-            ref: '${{ github.event.inputs.target }}'
+            ref: '${{ steps.releases.outputs.REF }}'
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
@@ -35,7 +38,7 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/misskey-arm64:latest
-            ghcr.io/${{ github.repository_owner }}/misskey-arm64:${{ github.event.inputs.target }}
+            ghcr.io/${{ github.repository_owner }}/misskey-arm64:${{ steps.releases.outputs.REF }}
           cache-from: type=registry,ref=user/app:latest
           cache-to: type=inline
 
