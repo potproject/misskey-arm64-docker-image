@@ -11,8 +11,8 @@ jobs:
       - name: Get latest Releases
         id: releases
         run: |
-          REF=`curl -s https://api.github.com/repos/misskey-dev/misskey/releases/latest | jq -r '.tag_name'`
-          echo '::set-output name=REF::$REF'
+          ref=`curl -s https://api.github.com/repos/misskey-dev/misskey/releases/latest | jq -r '.tag_name'` &&
+          echo '::set-output name=REF::$ref'
       - name: Checkout
         uses: actions/checkout@v2
         with:
