@@ -12,7 +12,7 @@ jobs:
         id: releases
         run: |
           REF=`curl -s https://api.github.com/repos/misskey-dev/misskey/releases/latest | jq -r '.tag_name'`
-          echo '::set-output name=REF::${REF}'
+          echo '::set-output name=REF::$REF'
       - name: Checkout
         uses: actions/checkout@v2
         with:
