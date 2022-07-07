@@ -9,8 +9,8 @@ Generating [Misskey](https://github.com/misskey-dev/misskey) ARM64 Docker Image 
 ### Docker Pull Command
 
 ```
-# Using 12.84.3
-docker pull ghcr.io/potproject/misskey-arm64:12.84.3
+# Using 12.110.1
+docker pull ghcr.io/potproject/misskey-arm64:12.110.1
 ```
 
 ## Development
